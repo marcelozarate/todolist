@@ -6,6 +6,6 @@ local_settings.py
 *.nja
 =======
 local_settings.py
+>>>>>>> c4a1eeb126a8a0c1f14abdecd329a9c264ee227d
 south/
 South.egg-info/
->>>>>>> c4a1eeb126a8a0c1f14abdecd329a9c264ee227d
