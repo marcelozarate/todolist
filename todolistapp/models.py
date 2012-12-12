@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=32)
     slug = models.SlugField(unique=True)
+    description = models.CharField(max_length=64, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -26,7 +27,7 @@ class Task(models.Model):
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default=u'P')
     creation_date = models.DateTimeField(auto_now_add=True)
     limit_date = models.DateTimeField(null=False, blank=False)
-    completed_date = models.DateTimeField(blank=True)
+    completed_date = models.DateTimeField(null=True, blank=True)
     category = models.ForeignKey(Category)
     owner = models.ForeignKey(User)
 

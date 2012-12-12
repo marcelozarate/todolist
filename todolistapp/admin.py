@@ -13,10 +13,13 @@ class TaskAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
             'fields': (('title', 'slug'), 'description',
-                ('owner', 'category'), ('limit_date',
-                    'completed_date')),
+                ('owner', 'category'), ('limit_date')),
         }),
     )
+    list_display = ['title', 'creation_date', 'owner']
+    list_filter = ['category']
+    search_fields = ('title', 'description',)
+
 
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Category, CategoryAdmin)

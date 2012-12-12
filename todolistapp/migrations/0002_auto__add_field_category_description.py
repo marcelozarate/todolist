@@ -8,36 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Category'
-        db.create_table('todolistapp_category', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
-        ))
-        db.send_create_signal('todolistapp', ['Category'])
-
-        # Adding model 'Task'
-        db.create_table('todolistapp_task', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=50)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
-            ('state', self.gf('django.db.models.fields.CharField')(default=u'P', max_length=1)),
-            ('creation_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('limit_date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('completed_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('category', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['todolistapp.Category'])),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-        ))
-        db.send_create_signal('todolistapp', ['Task'])
+        # Adding field 'Category.description'
+        db.add_column('todolistapp_category', 'description',
+                      self.gf('django.db.models.fields.CharField')(max_length=64, null=True, blank=True),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Category'
-        db.delete_table('todolistapp_category')
-
-        # Deleting model 'Task'
-        db.delete_table('todolistapp_task')
+        # Deleting field 'Category.description'
+        db.delete_column('todolistapp_category', 'description')
 
 
     models = {
@@ -79,6 +58,7 @@ class Migration(SchemaMigration):
         },
         'todolistapp.category': {
             'Meta': {'object_name': 'Category'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '64', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50'})
