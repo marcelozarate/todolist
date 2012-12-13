@@ -1,0 +1,15 @@
+
+<html>
+    <head>
+        <title>{% block htmltitle %}TO-DO LIST{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/styles.css" />
+    </head>
+
+    <body>
+        <div class="main">
+            {% block main %}
+            {% endblock %}
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block htmltitle %}
+{{ block.super }} | Todos los posts
+{% endblock htmltitle %}
+
+{% block main %}
+
+Bienvenido {{ user }} | <a href="{% url logout %}">cerrar sesi&oacute;n</a>
+
+    {% for tarea in task %}
+        <h4><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a></h4>
+    {% endfor %}
+
+{% endblock main %}
