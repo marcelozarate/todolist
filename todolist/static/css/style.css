@@ -1,0 +1,61 @@
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color:#333;
+
+    background-image:url('../img/cloud_sea.jpg');
+    font-family: Calibri;
+}
+
+p {
+    padding: 10px;
+}
+
+#wrapper {
+    margin: 0 auto;
+    width: 960px;
+}
+
+#header {
+    float: left;
+    width: 960px;
+    background: #FF6633;
+    font-size: 32px;
+    text-shadow: 0 0 0.2em #ddd, 0 0 0.2em #ddd, 0 0 0.2em #ddd;
+
+}
+
+#navigation {
+    float: left;
+    height: 40px;
+    width: 960px;
+    background: #FFCC33;
+    font-family: Courier New;
+}
+
+#container {
+    float: left;
+    background-color: #fff;
+    overflow: hidden;
+    width: 960px;
+}
+
+#content {
+    float: left;
+    background: #FFFFFF;
+}
+
+#leftcolumn {
+    background: #33CCFF;
+    width: 150px;
+    float: left;
+    text-align: left;
+}
+
+#footer {
+    height: 40px;
+    width: 960px;
+    background: #33FF66;
+    clear: both;
+}
+

@@ -1,15 +1,37 @@
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-    <head>
-        <title>{% block htmltitle %}TO-DO LIST{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/styles.css" />
-    </head>
-
-    <body>
-        <div class="main">
-            {% block main %}
-            {% endblock %}
+<head>
+<title>{% block htmltitle %}TO-DO LIST{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" />
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <p><img src="{{ STATIC_URL }}img/todologo.png" width="100"/>&nbsp;&nbsp;&nbsp;TO-DO LIST</p>
         </div>
-    </body>
+        <div id="container">
+            <div id="navigation">
+                <p>Home</p>
+            </div>
+            <div id="leftcolumn">
+                <p>
+                    <ul>
+                    <li>Inicio</li>
+                    <li>Ver mis tareas</li>
+                    <li>Cerrar sesi&oacute;n</li>
+                    </ul>
+                </p>
+            </div>
+            <div id="content">
+                <p> {% block main %}
+                    {% endblock %}
 
+                </p>
+           </div>
+       </div>
+        <div id="footer">
+                <p align="center"><strong>Desarrollado por:</strong> <a href="http://www.github.com/marcelozarate">Marcelo Zarate</a> - usando Django Framework</p>
+        </div>
+    </div>
+</body>
 </html>
