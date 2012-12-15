@@ -4,6 +4,11 @@
 {{ block.super }} | Todos los posts
 {% endblock htmltitle %}
 
+{% block menu %}
+    <li>Ver mis tareas</li>
+    <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
+{% endblock menu %}
+
 {% block main %}
 
 Bienvenido {{ user }} | <a href="{% url logout %}">cerrar sesi&oacute;n</a>

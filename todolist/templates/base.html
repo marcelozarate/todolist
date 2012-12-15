@@ -16,21 +16,21 @@
             <div id="leftcolumn">
                 <p>
                     <ul>
-                    <li>Inicio</li>
-                    <li>Ver mis tareas</li>
-                    <li>Cerrar sesi&oacute;n</li>
+                    <li><a href="{% url home %}">Inicio</a></li>
+                    {% block menu %}
+                    {% endblock menu %}
                     </ul>
                 </p>
             </div>
             <div id="content">
                 <p> {% block main %}
-                    {% endblock %}
+                    {% endblock main %}
 
                 </p>
            </div>
        </div>
         <div id="footer">
-                <p align="center"><strong>Desarrollado por:</strong> <a href="http://www.github.com/marcelozarate">Marcelo Zarate</a> - usando Django Framework</p>
+                <p align="center"><a href="{% url admin:index %}">Ingreso Administraci&oacute;n</a> | <strong>Desarrollado por:</strong> <a href="http://www.github.com/marcelozarate">Marcelo Zarate</a> - usando Django Framework</p>
         </div>
     </div>
 </body>

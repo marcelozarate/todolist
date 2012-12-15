@@ -7,7 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    # url(r'^$', 'todolist.views.home', name='home'),
+    url(r'^$', 'todolistapp.views.home', name='home'),
     # url(r'^todolist/', include('todolist.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -22,4 +22,6 @@ urlpatterns = patterns('',
     url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^logout/$',
         'django.contrib.auth.views.logout_then_login', name='logout'),
+
+    url(r'^register/$', 'todolist.views.register', name='register'),
 )

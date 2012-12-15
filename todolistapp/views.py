@@ -13,6 +13,10 @@ from todolistapp.models import Task
 # Create your views here.
 
 
+def home(request):
+    return TemplateResponse(request, 'todolist/home.html',)
+
+
 @login_required
 def list(request):
     tasks = Task.objects.all().order_by('id')
@@ -20,6 +24,7 @@ def list(request):
             'todolist/list.html', {'task': tasks, })
 
 
+@login_required
 def task_detail(request, task_id):
     """View para mostrar el detalle de un task particular, por id."""
     task = get_object_or_404(Task, id=task_id)
