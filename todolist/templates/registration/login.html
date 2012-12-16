@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
+{% block htmltitle %}{{ block.super }} | Ingresar{% endblock %}
+
+{% block nav %}
+    <p><a href="{% url home %}">Inicio</a> -> Ingresar</p>
+{% endblock nav %}
+
+{% block menu %}
+    <li>Ingresar</li>
+    <li><a href="{% url register %}">Registrarme</a></li>
+{% endblock menu %}
+
 {% block main %}
     <form action="." method="POST"> {% csrf_token %}
     <table>

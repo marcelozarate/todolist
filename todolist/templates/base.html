@@ -11,12 +11,12 @@
         </div>
         <div id="container">
             <div id="navigation">
-                <p>Home</p>
+                {% block nav %}
+                {% endblock nav %}
             </div>
             <div id="leftcolumn">
                 <p>
                     <ul>
-                    <li><a href="{% url home %}">Inicio</a></li>
                     {% block menu %}
                     {% endblock menu %}
                     </ul>

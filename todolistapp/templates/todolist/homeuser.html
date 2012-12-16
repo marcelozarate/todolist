@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block htmltitle %}
-{{ block.super }} | Todos las tareas
+{{ block.super }} | Inicio
 {% endblock htmltitle %}
 
 
 {% block nav %}
-    <p><a href="{% url home %}">Inicio</a> -> Ver mis tareas</p>
+    <p>Inicio ({{user}})</p>
 {% endblock nav %}
 
 {% block menu %}
-    <li><a href="{% url home %}">Inicio</a></li>
-    <li>Ver mis tareas</li>
+    <li>Inicio</li>
+    <li><a href="{% url list %}">Ver mis tareas</a></li>
     <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
 {% endblock menu %}
 

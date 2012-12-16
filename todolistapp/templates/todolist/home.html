@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+
+{% block nav %}
+    <p>Inicio</p>
+{% endblock nav %}
+
 {% block menu %}
+    <li><a href="{% url login %}">Ingresar</a></li>
     <li><a href="{% url register %}">Registrarme</a></li>
 {% endblock menu %}

@@ -14,14 +14,21 @@ from todolistapp.models import Task
 
 
 def home(request):
-    return TemplateResponse(request, 'todolist/home.html',)
+    if not request.user.is_authenticated():
+        return TemplateResponse(request, 'todolist/home.html',)
+    else:
+        return TemplateResponse(request, 'todolist/homeuser.html',)
 
 
 @login_required
 def list(request):
-    tasks = Task.objects.all().order_by('id')
-    return TemplateResponse(request,
-            'todolist/list.html', {'task': tasks, })
+    try:
+        usuario = request.user
+        tasks = Task.objects.filter(owner=usuario).order_by('id')
+    except Task.DoesNotExist:
+        return TemplateResponse(request,
+                 'todolist/list.html', {'task': tasks, })
+    return TemplateResponse(request, 'todolist/list.html', {'task': tasks, })
 
 
 @login_required
