@@ -6,7 +6,7 @@
 
 
 {% block nav %}
-    <p><a href="{% url home %}">Inicio</a> -> Ver mis tareas</p>
+    <p><a href="{% url home %}">Inicio</a> ({{ user }}) -> Mis tareas</p>
 {% endblock nav %}
 
 {% block menu %}
@@ -17,8 +17,15 @@
 
 {% block main %}
 
+{% if mensaje %}
+    <div class="mensaje">{{ mensaje }}</div>
+{% endif %}
+
+    Agregar tarea
     {% for tarea in task %}
-        <h4><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a></h4>
+        <h2><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a> -
+        <a href="">Modificar</a> -
+        <a href="{% url delete-task tarea.id %}">Eliminar</a></h2>
     {% endfor %}
 
 {% endblock main %}
