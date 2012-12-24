@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from todolistapp.models import Task
 from todolistapp.forms import TaskForm
+from todolistapp.forms import TaskEditForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
@@ -42,7 +43,7 @@ def list(request):
 
 
 @login_required
-def task_detail(request, task_id, extra_context):
+def task_detail(request, task_id):
     """View para mostrar el detalle de un task particular, por id."""
     task = get_object_or_404(Task, id=task_id)
     # este código comentado es equivalente a la línea de arriba
@@ -97,20 +98,19 @@ def create_task(request):
              'todolist/create_task.html', {'form': form, })
 
 
-#def create_task(request):
-#    """
-#    Crea una nueva tarea.
-#    """
-#    if request.method == 'POST':
-#        form = TaskForm(request.POST)
-#        if form.is_valid():
+def edit_task(request, task_id):
+    """Vista para editar una tarea, por id."""
+    if request.method == 'POST':
+        form = TaskEditForm(request.POST)
+        if form.is_valid():
 
-#            # Crea un nuevo objeto tarea.
-#            form.save()
-#    else:
-#        form = TaskForm()
-
-#    variables = RequestContext(request, {
-#        'form': form
-#    })
-#    return render_to_response('todolist/create_task.html', variables)
+            task = Task.objects.get(id=task_id)
+            form = TaskEditForm(request.POST, instance=task)
+            request.session["mensaje"] = "La tarea con id " + task_id + """ ha
+            sido editada exitosamente"""
+            form.save()
+            return HttpResponseRedirect(reverse('list'))
+    else:
+        form = TaskEditForm()
+    return TemplateResponse(request,
+             'todolist/edit_task.html', {'form': form, })

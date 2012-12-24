@@ -18,6 +18,17 @@ class TaskForm(ModelForm):
                     'owner',)
 
 
+class TaskEditForm(ModelForm):
+    class Meta:
+        model = Task
+        widgets = {
+                    'limit_date': widgets.SplitDateTimeWidget(),
+                    'completed_date': widgets.SplitDateTimeWidget(),
+                  }
+        exclude = ('slug',
+                    'creation_date',
+                    'owner',)
+
 #class TaskForm(forms.Form):
 #    title = forms.CharField(max_length=128)
 #    slug = forms.

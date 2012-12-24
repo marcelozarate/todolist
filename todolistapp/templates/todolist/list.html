@@ -24,7 +24,17 @@
     <a href="{% url create-task %}">Agregar tarea</a>
     {% for tarea in task %}
         <h2><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a> -
-        <a href="">Modificar</a> -
+        {{ tarea.category }} -
+        {% if tarea.state == 'P' %}
+            Pendiente -
+        {% endif %}
+        {% if tarea.state == 'C' %}
+            Completada -
+        {% endif %}
+        {% if tarea.state == 'X' %}
+            Cancelada -
+        {% endif %}
+        <a href="{% url edit-task tarea.id %}">Modificar</a> -
         <a href="{% url delete-task tarea.id %}">Eliminar</a></h2>
     {% endfor %}
 
