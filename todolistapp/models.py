@@ -15,18 +15,20 @@ class Category(models.Model):
         return self.name
 
 
-class Task(models.Model):
-    title = models.CharField(max_length=128)
-    slug = models.SlugField(unique=True)
-    description = models.TextField()
-    STATE_CHOICES = (
+STATE_CHOICES = (
         (u'P', u'Pending'),
         (u'X', u'Cancelled'),
         (u'C', u'Completed'),
     )
+
+
+class Task(models.Model):
+    title = models.CharField(max_length=128)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
     state = models.CharField(max_length=1, choices=STATE_CHOICES, default=u'P')
     creation_date = models.DateTimeField(auto_now_add=True)
-    limit_date = models.DateTimeField(null=False, blank=False)
+    limit_date = models.DateTimeField(blank=True)
     completed_date = models.DateTimeField(null=True, blank=True)
     category = models.ForeignKey(Category)
     owner = models.ForeignKey(User)

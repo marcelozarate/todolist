@@ -21,7 +21,7 @@
     <div class="mensaje">{{ mensaje }}</div>
 {% endif %}
 
-    Agregar tarea
+    <a href="{% url create-task %}">Agregar tarea</a>
     {% for tarea in task %}
         <h2><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a> -
         <a href="">Modificar</a> -

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block htmltitle %}{{ block.super }} | Crear una tarea{% endblock %}
+
+{% block main %}
+    <h1>Crear una tarea</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+<!--            {{ form.title.errors }}
+            {{ form.title.label_tag }}: {{ form.title }}
+            {{ form.description.errors }}
+            {{ form.description.label_tag }}: {{ form.description }}
+            {{ form.category.errors }}
+            {{ form.category.label_tag }}: {{ form.category }}
+            {{ form.owner.errors }}
+            {{ form.owner.label_tag }}: {{ form.owner }}
+-->
+        <input type="submit" value="Crear" />
+    </form>
+{% endblock %}

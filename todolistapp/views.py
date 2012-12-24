@@ -2,16 +2,18 @@
 
 from django.contrib.auth.decorators import login_required
 #from django.http import HttpResponse
-#from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect
 #from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from todolistapp.models import Task
-#from todolistapp.forms import TaskForm
-#from django.core.urlresolvers import reverse
+from todolistapp.forms import TaskForm
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.template import defaultfilters
+from django.utils import timezone
 # Create your views here.
 
 
@@ -60,3 +62,55 @@ def delete_task(request, task_id):
     request.session["mensaje"] = """La tarea con id """ + task_id + """ ha
                                    sido borrada exitosamente"""
     return redirect("list")
+
+
+def create_task(request):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            # Se procesan los datos de form.cleaned_data
+            #form.cleaned_data['title']
+            task = form.save(commit=False)
+            task.slug = defaultfilters.slugify(task.title)
+            task.state = u'P'
+            task.completed_date = None
+            task.creation_date = timezone.now()
+            task.owner = request.user
+            task.save()
+
+#            myslug = text.slugify(form.cleaned_data['title'])
+#            mystate = u'P'
+#            mycreation_date = timezone.now()
+#            mycompleted_date = None
+#            myowner = request.user
+#            tarea = Task(slug=myslug,
+#                        state=mystate,
+#                        creation_date=mycreation_date,
+#                        completed_date=mycompleted_date,
+#                        owner=myowner)
+#            form = TaskForm(request.POST, instance=tarea)
+#            form.save()  # task = form.save()
+            return HttpResponseRedirect(reverse('list'))
+    else:
+        form = TaskForm()
+    return TemplateResponse(request,
+             'todolist/create_task.html', {'form': form, })
+
+
+#def create_task(request):
+#    """
+#    Crea una nueva tarea.
+#    """
+#    if request.method == 'POST':
+#        form = TaskForm(request.POST)
+#        if form.is_valid():
+
+#            # Crea un nuevo objeto tarea.
+#            form.save()
+#    else:
+#        form = TaskForm()
+
+#    variables = RequestContext(request, {
+#        'form': form
+#    })
+#    return render_to_response('todolist/create_task.html', variables)
