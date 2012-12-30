@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 #from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
+from todolistapp.models import Category
 from todolistapp.models import Task
 from todolistapp.forms import TaskForm
 from todolistapp.forms import TaskEditForm
@@ -100,17 +101,72 @@ def create_task(request):
 
 def edit_task(request, task_id):
     """Vista para editar una tarea, por id."""
+    tarea = get_object_or_404(Task, id=task_id)
     if request.method == 'POST':
-        form = TaskEditForm(request.POST)
+        form = TaskEditForm(request.POST, instance=tarea)
+#        form = TaskEditForm(request.POST)
         if form.is_valid():
 
-            task = Task.objects.get(id=task_id)
-            form = TaskEditForm(request.POST, instance=task)
+           # task = Task.objects.get(id=task_id)
+           # form = TaskEditForm(request.POST, instance=task)
             request.session["mensaje"] = "La tarea con id " + task_id + """ ha
             sido editada exitosamente"""
             form.save()
             return HttpResponseRedirect(reverse('list'))
     else:
-        form = TaskEditForm()
+        form = TaskEditForm(instance=tarea)
     return TemplateResponse(request,
              'todolist/edit_task.html', {'form': form, })
+
+
+@login_required
+def filter_category(request, category_id):
+    if "mensaje" in request.session:
+        mensaje = request.session["mensaje"]
+        del request.session["mensaje"]
+    else:
+        mensaje = ""
+    try:
+        usuario = request.user
+        categoria = Category.objects.filter(id=category_id)
+        tasks = Task.objects.filter(owner=usuario,
+            category=categoria).order_by('id')
+    except Task.DoesNotExist:
+            return render_to_response('todolist/list.html', {'task': tasks,
+                "mensaje": mensaje}, context_instance=RequestContext(request))
+    return render_to_response('todolist/list.html', {'task': tasks,
+        "mensaje": mensaje}, context_instance=RequestContext(request))
+
+
+@login_required
+def order_by_limit_date_asc(request):
+    if "mensaje" in request.session:
+        mensaje = request.session["mensaje"]
+        del request.session["mensaje"]
+    else:
+        mensaje = ""
+    try:
+        usuario = request.user
+        tasks = Task.objects.filter(owner=usuario).order_by('limit_date')
+    except Task.DoesNotExist:
+            return render_to_response('todolist/list.html', {'task': tasks,
+                "mensaje": mensaje}, context_instance=RequestContext(request))
+    return render_to_response('todolist/list.html', {'task': tasks,
+        "mensaje": mensaje}, context_instance=RequestContext(request))
+
+
+@login_required
+def order_by_limit_date_desc(request):
+    if "mensaje" in request.session:
+        mensaje = request.session["mensaje"]
+        del request.session["mensaje"]
+    else:
+        mensaje = ""
+    try:
+        usuario = request.user
+        tasks = Task.objects.filter(owner=usuario).order_by('-limit_date')
+    except Task.DoesNotExist:
+            return render_to_response('todolist/list.html', {'task': tasks,
+                "mensaje": mensaje}, context_instance=RequestContext(request))
+    return render_to_response('todolist/list.html', {'task': tasks,
+        "mensaje": mensaje}, context_instance=RequestContext(request))

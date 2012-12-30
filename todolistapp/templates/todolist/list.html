@@ -22,20 +22,39 @@
 {% endif %}
 
     <a href="{% url create-task %}">Agregar tarea</a>
+    <table>
+        <tr>
+            <td>Categor&iacute;a</td>
+            <td>Tarea</td>
+            <td>Estado</td>
+            <td>Fecha de creaci&oacute;n</td>
+            <td>Fecha l&iacute;mite  <a href="{% url order-by-limit-date-asc %}">&gt;</a> <a href="{% url order-by-limit-date-desc %}">&lt;</a></td>
+            <td>Fecha de completitud</td>
+            <td>Modificar</td>
+            <td>Eliminar</td>
+        </tr>
     {% for tarea in task %}
-        <h2><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a> -
-        {{ tarea.category }} -
-        {% if tarea.state == 'P' %}
-            Pendiente -
-        {% endif %}
-        {% if tarea.state == 'C' %}
-            Completada -
-        {% endif %}
-        {% if tarea.state == 'X' %}
-            Cancelada -
-        {% endif %}
-        <a href="{% url edit-task tarea.id %}">Modificar</a> -
-        <a href="{% url delete-task tarea.id %}">Eliminar</a></h2>
+        <tr>
+            <td><a href="{% url filter-category tarea.category.id %}">{{ tarea.category }}</a></td>
+            <td><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a></td>
+            <td>
+                {% if tarea.state == 'P' %}
+                    Pendiente
+                {% endif %}
+                {% if tarea.state == 'C' %}
+                    Completada
+                {% endif %}
+                {% if tarea.state == 'X' %}
+                    Cancelada
+                {% endif %}
+            </td>
+            <td>{{ tarea.creation_date }}</td>
+            <td>{{ tarea.limit_date }}</td>
+            <td>{{ tarea.completed_date }}</td>
+            <td><a href="{% url edit-task tarea.id %}">Modificar</a></td>
+            <td><a href="{% url delete-task tarea.id %}">Eliminar</a></td>
+        </tr>
     {% endfor %}
+    </table>
 
 {% endblock main %}
