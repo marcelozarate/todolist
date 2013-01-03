@@ -2,6 +2,17 @@
 
 {% block htmltitle %}{{ block.super }} | Crear una tarea{% endblock %}
 
+{% block nav %}
+    <p><a href="{% url home %}">Inicio</a> ({{ user }}) -> <a href="{% url list %}">Mis tareas</a> -> Crear una tarea</p>
+{% endblock nav %}
+
+{% block menu %}
+    <li><a href="{% url home %}">Inicio</a></li>
+    <li><a href="{% url list-category %}">Ver mis categor&iacute;as</a></li>
+    <li><a href="{% url list %}">Ver mis tareas</a></li>
+    <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
+{% endblock menu %}
+
 {% block main %}
     <h1>Crear una tarea</h1>
     <form action="" method="post">

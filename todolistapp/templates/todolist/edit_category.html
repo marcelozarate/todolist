@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block htmltitle %}{{ block.super }} | Editar tarea{% endblock %}
+{% block htmltitle %}{{ block.super }} | Editar categor&iacute;a{% endblock %}
 
 {% block nav %}
     <p><a href="{% url home %}">Inicio</a> ({{ user }}) ->
-    <a href="{% url list %}">Mis tareas</a> ->
-    Editar tarea</p>
+    <a href="{% url list %}">Mis categor&iacute;as</a> ->
+    Editar categor&iacute;a</p>
 {% endblock nav %}
 
 {% block menu %}
@@ -17,7 +17,7 @@
 
 
 {% block main %}
-    <h1>Editar tarea</h1>
+    <h1>Editar categor&iacute;a</h1>
     <form action="" method="post">
         {% csrf_token %}
             <table>

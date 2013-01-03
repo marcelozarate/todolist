@@ -10,6 +10,7 @@ from todolistapp.models import Category
 from todolistapp.models import Task
 from todolistapp.forms import TaskForm
 from todolistapp.forms import TaskEditForm
+from todolistapp.forms import CategoryForm
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.shortcuts import render_to_response
@@ -27,7 +28,7 @@ def home(request):
 
 
 @login_required
-def list(request):
+def list(request, orderby=None, ordertype=None):
     if "mensaje" in request.session:
         mensaje = request.session["mensaje"]
         del request.session["mensaje"]
@@ -66,6 +67,7 @@ def delete_task(request, task_id):
     return redirect("list")
 
 
+@login_required
 def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -99,6 +101,7 @@ def create_task(request):
              'todolist/create_task.html', {'form': form, })
 
 
+@login_required
 def edit_task(request, task_id):
     """Vista para editar una tarea, por id."""
     tarea = get_object_or_404(Task, id=task_id)
@@ -170,3 +173,65 @@ def order_by_limit_date_desc(request):
                 "mensaje": mensaje}, context_instance=RequestContext(request))
     return render_to_response('todolist/list.html', {'task': tasks,
         "mensaje": mensaje}, context_instance=RequestContext(request))
+
+
+@login_required
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save(commit=False)
+            category.slug = defaultfilters.slugify(category.name)
+            category.owner = request.user
+            category.save()
+            return HttpResponseRedirect(reverse('list-category'))
+    else:
+        form = CategoryForm()
+    return TemplateResponse(request,
+             'todolist/create_category.html', {'form': form, })
+
+
+@login_required
+def list_category(request):
+    if "mensaje" in request.session:
+        mensaje = request.session["mensaje"]
+        del request.session["mensaje"]
+    else:
+        mensaje = ""
+    try:
+        usuario = request.user
+        categories = Category.objects.filter(owner=usuario).order_by('id')
+    except Task.DoesNotExist:
+            return render_to_response('todolist/list-category.html',
+            {'category': categories,
+                "mensaje": mensaje}, context_instance=RequestContext(request))
+    return render_to_response('todolist/list-category.html',
+        {'category': categories,
+        "mensaje": mensaje}, context_instance=RequestContext(request))
+
+
+@login_required
+def edit_category(request, category_id):
+    """Vista para editar una categoria, por id."""
+    categoria = get_object_or_404(Category, id=category_id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=categoria)
+        if form.is_valid():
+            request.session["mensaje"] = """La categoria con
+            id """ + category_id + " ha sido editada exitosamente"
+            form.save()
+            return HttpResponseRedirect(reverse('list-category'))
+    else:
+        form = CategoryForm(instance=categoria)
+    return TemplateResponse(request,
+             'todolist/edit_category.html', {'form': form, })
+
+
+@login_required
+def delete_category(request, category_id):
+    """View para borrar una categoria, por id."""
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    request.session["mensaje"] = """La categoria con id """ + category_id + """
+                                     ha sido borrada exitosamente"""
+    return redirect("list-category")

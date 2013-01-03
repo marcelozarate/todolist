@@ -11,6 +11,7 @@
 
 {% block menu %}
     <li><a href="{% url home %}">Inicio</a></li>
+    <li><a href="{% url list-category %}">Ver mis categor&iacute;as</a></li>
     <li>Ver mis tareas</li>
     <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
 {% endblock menu %}
@@ -28,6 +29,7 @@
             <td>Tarea</td>
             <td>Estado</td>
             <td>Fecha de creaci&oacute;n</td>
+<!--            <td>Fecha l&iacute;mite  <a href="{% url order-by-limit-date-asc %}">&gt;</a> <a href="{% url order-by-limit-date-desc %}">&lt;</a></td> -->
             <td>Fecha l&iacute;mite  <a href="{% url order-by-limit-date-asc %}">&gt;</a> <a href="{% url order-by-limit-date-desc %}">&lt;</a></td>
             <td>Fecha de completitud</td>
             <td>Modificar</td>

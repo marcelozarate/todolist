@@ -1,5 +1,6 @@
 # -*- coding: utf-8 *-*
 from todolistapp.models import Task
+from todolistapp.models import Category
 from django.forms import ModelForm
 from django.forms import widgets
 #from django import forms
@@ -29,13 +30,8 @@ class TaskEditForm(ModelForm):
                     'creation_date',
                     'owner',)
 
-#class TaskForm(forms.Form):
-#    title = forms.CharField(max_length=128)
-#    slug = forms.
-#    description =
-#    state =
-#    creation_date =
-#    limit_date =
-#    completed_date =
-#    category =
-#    owner =
+
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        exclude = ('slug', 'owner',)
