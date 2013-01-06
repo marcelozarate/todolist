@@ -11,7 +11,7 @@
 
 {% block menu %}
     <li><a href="{% url home %}">Inicio</a></li>
-    <li>Ver mis categor&iacute;as</li>
+    <li><a href="{% url list-category %}">Ver mis categor&iacute;as</a></li>
     <li><a href="{% url list %}">Ver mis tareas</a></li>
     <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
 {% endblock menu %}
@@ -22,22 +22,24 @@
     <div class="mensaje">{{ mensaje }}</div>
 {% endif %}
 
-    <a href="{% url create-category %}">Agregar categor&iacute;a</a>
-    <table>
-        <tr>
-            <td>Categor&iacute;a</td>
-            <td>Descripci&oacute;n</td>
-            <td>Modificar</td>
-            <td>Eliminar</td>
-        </tr>
-    {% for categoria in category %}
-        <tr>
-            <td>{{ categoria.name }}</a></td>
-            <td>{{ categoria.description }}</a></td>
-            <td><a href="{% url edit-category categoria.id %}">Modificar</a></td>
-            <td><a href="{% url delete-category categoria.id %}">Eliminar</a></td>
-        </tr>
-    {% endfor %}
-    </table>
+    <a href="{% url create-category %}"><img src="{{ STATIC_URL }}img/add.png" width="24" height="24" style="vertical-align:middle;" /></a>&nbsp;<a href="{% url create-category %}" style="text-decoration:none;">Agregar categor&iacute;a</a>
+    <div class="CSSTableGenerator" >
+        <table>
+            <tr>
+                <td>Categor&iacute;a</td>
+                <td>Descripci&oacute;n</td>
+                <td> </td>
+                <td> </td>
+            </tr>
+        {% for categoria in category %}
+            <tr>
+                <td>{{ categoria.name }}</a></td>
+                <td>{{ categoria.description }}</a></td>
+                <td><a href="{% url edit-category categoria.id %}"><img src="{{ STATIC_URL }}img/edit.png" width="24" height="24" /></a></td>
+                <td><a href="{% url delete-category categoria.id %}"><img src="{{ STATIC_URL }}img/delete.png" width="24" height="24" /></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 
 {% endblock main %}

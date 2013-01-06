@@ -9,3 +9,10 @@
     <li><a href="{% url login %}">Ingresar</a></li>
     <li><a href="{% url register %}">Registrarme</a></li>
 {% endblock menu %}
+
+{% block main %}
+    <h1>¡Bienvenido!</h1>
+    Si ya est&aacute;s registrado, utiliza el men&uacute; para ingresar al sistema.
+    Puedes crearte una cuenta f&aacute;cilmente haciendo clic <a href="{% url register %}">aqu&iacute;</a>.
+
+{% endblock main %}

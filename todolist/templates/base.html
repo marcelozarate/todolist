@@ -15,12 +15,13 @@
                 {% endblock nav %}
             </div>
             <div id="leftcolumn">
-                <p>
-                    <ul>
-                    {% block menu %}
-                    {% endblock menu %}
-                    </ul>
-                </p>
+                    <div id="menu">
+                        <ul>
+                            {% block menu %}
+                            {% endblock menu %}
+                        </ul>
+                    </div>
+
             </div>
             <div id="content">
                 <p> {% block main %}

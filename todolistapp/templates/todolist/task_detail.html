@@ -15,5 +15,26 @@
 
 {% block main %}
     <h3>{{ task.title }}</h3>
-    <div>{{ task.description|linebreaks }}</div>
+    <h5>{{ task.slug }}</h5>
+    <div><i>{{ task.description|linebreaks }}</i></div>
+    <div><b>Categor&iacute;a:</b> {{ task.category }}</div>
+    <div><b>Estado:</b> {% if task.state == 'P' %}
+                        Pendiente
+                    {% endif %}
+                    {% if task.state == 'C' %}
+                        Completada
+                    {% endif %}
+                    {% if task.state == 'X' %}
+                        Cancelada
+                    {% endif %}
+    </div>
+    <div><b>Fecha de Creaci&oacute;n:</b> {{ task.creation_date }}</div>
+    <div><b>Fecha de l&iacute;mite:</b> {{ task.limit_date }}</div>
+    <div><b>Fecha de fin:</b> {% if task.completed_date == None %}
+                        A&uacute;n no especificada.
+                        {% else %}
+                        {{ task.completed_date }}
+                        {% endif %}
+    </div>
+    <div><b>Usuario:</b> {{ task.owner }}</div>
 {% endblock %}

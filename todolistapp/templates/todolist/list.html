@@ -12,7 +12,7 @@
 {% block menu %}
     <li><a href="{% url home %}">Inicio</a></li>
     <li><a href="{% url list-category %}">Ver mis categor&iacute;as</a></li>
-    <li>Ver mis tareas</li>
+    <li><a href="{% url list %}">Ver mis tareas</a></li>
     <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
 {% endblock menu %}
 
@@ -22,41 +22,50 @@
     <div class="mensaje">{{ mensaje }}</div>
 {% endif %}
 
-    <a href="{% url create-task %}">Agregar tarea</a>
-    <table>
-        <tr>
-            <td>Categor&iacute;a</td>
-            <td>Tarea</td>
-            <td>Estado</td>
-            <td>Fecha de creaci&oacute;n</td>
-<!--            <td>Fecha l&iacute;mite  <a href="{% url order-by-limit-date-asc %}">&gt;</a> <a href="{% url order-by-limit-date-desc %}">&lt;</a></td> -->
-            <td>Fecha l&iacute;mite  <a href="{% url order-by-limit-date-asc %}">&gt;</a> <a href="{% url order-by-limit-date-desc %}">&lt;</a></td>
-            <td>Fecha de completitud</td>
-            <td>Modificar</td>
-            <td>Eliminar</td>
-        </tr>
-    {% for tarea in task %}
-        <tr>
-            <td><a href="{% url filter-category tarea.category.id %}">{{ tarea.category }}</a></td>
-            <td><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a></td>
-            <td>
-                {% if tarea.state == 'P' %}
-                    Pendiente
-                {% endif %}
-                {% if tarea.state == 'C' %}
-                    Completada
-                {% endif %}
-                {% if tarea.state == 'X' %}
-                    Cancelada
-                {% endif %}
-            </td>
-            <td>{{ tarea.creation_date }}</td>
-            <td>{{ tarea.limit_date }}</td>
-            <td>{{ tarea.completed_date }}</td>
-            <td><a href="{% url edit-task tarea.id %}">Modificar</a></td>
-            <td><a href="{% url delete-task tarea.id %}">Eliminar</a></td>
-        </tr>
-    {% endfor %}
-    </table>
+    <a href="{% url create-task %}"><img src="{{ STATIC_URL }}img/add.png" width="24" height="24" style="vertical-align:middle;" /></a>&nbsp;<a href="{% url create-task %}" style="text-decoration:none;">Agregar tarea</a>
+    <div class="CSSTableGenerator" >
+        <table>
+            <tr>
+                <td>Categor&iacute;a</td>
+                <td>Tarea</td>
+                <td>Estado</td>
+                <td>Fecha de creaci&oacute;n</td>
+    <!--            <td>Fecha l&iacute;mite  <a href="{% url order-by-limit-date-asc %}">&gt;</a> <a href="{% url order-by-limit-date-desc %}">&lt;</a></td> -->
+                <td>
+                    <div style="float:left;">
+                        Fecha l&iacute;mite
+                    </div>
+                    <div style="float:left;">
+                        <a href="{% url order-by-limit-date-asc %}"><div class="uparrow"></div></a><a href="{% url order-by-limit-date-desc %}"><div class="downarrow"></div></a>
+                    </div>
+                </td>
+                <td>Fecha de fin</td>
+                <td> </td>
+                <td> </td>
+            </tr>
+        {% for tarea in task %}
+            <tr>
+                <td><a href="{% url filter-category tarea.category.id %}">{{ tarea.category }}</a></td>
+                <td><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a></td>
+                <td>
+                    {% if tarea.state == 'P' %}
+                        Pendiente
+                    {% endif %}
+                    {% if tarea.state == 'C' %}
+                        Completada
+                    {% endif %}
+                    {% if tarea.state == 'X' %}
+                        Cancelada
+                    {% endif %}
+                </td>
+                <td>{{ tarea.creation_date }}</td>
+                <td>{{ tarea.limit_date }}</td>
+                <td>{{ tarea.completed_date }}</td>
+                <td><a href="{% url edit-task tarea.id %}"><img src="{{ STATIC_URL }}img/edit.png" width="24" height="24" /></a></td>
+                <td><a href="{% url delete-task tarea.id %}"><img src="{{ STATIC_URL }}img/delete.png" width="24" height="24" /></a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 
 {% endblock main %}

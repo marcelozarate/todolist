@@ -10,16 +10,14 @@
 {% endblock nav %}
 
 {% block menu %}
-    <li>Inicio</li>
+    <li><a href="{% url home %}">Inicio</a></li>
     <li><a href="{% url list-category %}">Ver mis categor&iacute;as</a></li>
     <li><a href="{% url list %}">Ver mis tareas</a></li>
     <li><a href="{% url logout %}">Cerrar sesi&oacute;n</a></li>
 {% endblock menu %}
 
 {% block main %}
-
-    {% for tarea in task %}
-        <h4><a href="{% url task-detail tarea.id %}">{{ tarea.title }}</a></h4>
-    {% endfor %}
+    <h1>¡Bienvenido {{user}}!</h1>
+    Utiliza el men&uacute; de la izquierda para acceder a tus categor&iacute;as y tareas.
 
 {% endblock main %}
